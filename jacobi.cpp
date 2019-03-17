@@ -78,6 +78,14 @@ void JacobiData::run() {
     effective_iter_count++;
     residual = sqrt(residual) / (n_cols * n_rows);
   } // while 
+
+  std::stringstream ss;
+  ss << std::setw(6) << std::setfill('0') << effective_iter_count;
+  std::string step = ss.str();
+  std::string filename = "out_" + step + ".dat";
+  
+  JacobiData::out(U,filename);
+
   long latice_site = (last_row - 1 - first_row + 1) * (n_cols - 2 - 1);
   total = latice_site * (effective_iter_count - 1);
   std::cout << "total " << total << std::endl;
