@@ -67,24 +67,16 @@ void JacobiData::run() {
     
     // output of solution U every out_iter steps 
     if (effective_iter_count%out_iter == 0 || effective_iter_count == 1){
-      std::stringstream ss;
-      ss << std::setw(6) << std::setfill('0') << effective_iter_count;
-      std::string step = ss.str();
-      std::string filename = "out_" + step + ".dat";
-      
-      JacobiData::out(U,filename);
+ 	std::string filename = iter2filename("out_",effective_iter_count,".dat"); 
+      	JacobiData::out(U,filename);
     }
     // error check 
     effective_iter_count++;
     residual = sqrt(residual) / (n_cols * n_rows);
   } // while 
 
-  std::stringstream ss;
-  ss << std::setw(6) << std::setfill('0') << effective_iter_count;
-  std::string step = ss.str();
-  std::string filename = "out_" + step + ".dat";
-  
-  JacobiData::out(U,filename);
+  std::string last_filename = iter2filename("out_",effective_iter_count,".dat"); 
+  JacobiData::out(U,last_filename);
 
   long latice_site = (last_row - 1 - first_row + 1) * (n_cols - 2 - 1);
   total = latice_site * (effective_iter_count - 1);
@@ -195,4 +187,15 @@ void JacobiData::out(std::vector<double> out_array,std::string filename){
       out_file << std::endl;
     } 
     
+}
+
+std::string JacobiData::iter2filename(std::string pre_iter, int iter, std::string post_iter){
+	  
+	std::stringstream ss;	
+      	ss << std::setw(6) << std::setfill('0') << iter;
+      	std::string step = ss.str();
+	std::string filename = pre_iter + step + post_iter;
+	
+	return filename;	
+  	
 }

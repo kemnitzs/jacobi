@@ -21,6 +21,8 @@ struct JacobiData
     }
 
     void init_matrix();
+
+    std::string iter2filename(std::string pre_iter, int iter, std::string post_iter);
     void out(std::vector<double> out_array, std::string filename);
 
     // data
