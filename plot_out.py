@@ -6,10 +6,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 #from pylab import figure
 from pathlib import Path
+import sys
 
-directory_in_str='./'
+if len(sys.argv)>1:
+    directory_in_str=sys.argv[1]
+else:
+    directory_in_str="./"
 
-E = np.loadtxt("exact.dat")
+E_file=directory_in_str + 'exact.dat'
+E = np.loadtxt(E_file)
 
 ny, nx = E.shape
 x = np.linspace(-1, 1, nx)

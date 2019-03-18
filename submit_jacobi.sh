@@ -1,10 +1,18 @@
 #!/bin/bash
-mkdir run
-cd run
+BASE=$(pwd)
 
-cp ../bin_jacobi .
-cp ../plot_out.py .
+echo $BASE
+RUNFOLDER=run/
+mkdir $RUNFOLDER 
+cd $RUNFOLDER
+
+cp $BASE/bin_jacobi .
 # run script
-
 ./bin_jacobi
-python3 plot_out.py
+
+cd $BASE
+# plot results
+STARTTIME=$(date +%s)
+python3 plot_out.py $RUNFOLDER
+ENDTIME=$(date +%s)
+echo "It takes $(($ENDTIME - $STARTTIME)) seconds to complete to create all images..."
