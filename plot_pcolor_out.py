@@ -37,21 +37,21 @@ for path in pathlist:
     M = np.loadtxt(str(path))
     fig = plt.figure(figsize=plt.figaspect(0.5))
     # subplot 1 - calculated
-    ax = fig.add_subplot(1, 2, 1, projection='3d')
-    surf = ax.plot_surface(X,Y,M, rstride=YS, cstride=XS, cmap='viridis', linewidth=0, antialiased=False)
-    ax.set_zlim(0,1.0)
+    ax = fig.add_subplot(1, 2, 1)
+    #surf = ax.plot_surface(X,Y,M, rstride=YS, cstride=XS, cmap='viridis', linewidth=0, antialiased=False)
+    surf = ax.pcolor(M)
     
     fig.colorbar(surf)
-    surf.set_clim(0,1.0)
+    surf.set_clim(-1.0,1.0)
     ax.set_title("calculated solution") 
     # subplot 2 - exact solution
     
-    ax2 = fig.add_subplot(1, 2, 2, projection='3d')
-    surf2 = ax2.plot_surface(X,Y,E, rstride=YS, cstride=XS, cmap='viridis', linewidth=0, antialiased=False)
-    ax2.set_zlim(0,1.0)
+    ax2 = fig.add_subplot(1, 2, 2)
+    #surf2 = ax2.plot_surface(X,Y,E, rstride=YS, cstride=XS, cmap='viridis', linewidth=0, antialiased=False)
+    surf2 = ax2.pcolor(E)
     
     fig.colorbar(surf2)
-    surf2.set_clim(0,1.0)
+    surf2.set_clim(-1.0,1.0)
     ax2.set_title("exact solution")
 
     # image output and closing of plots

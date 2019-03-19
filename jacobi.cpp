@@ -9,7 +9,6 @@
 *
 * Input : n,m   Number of grid points in the X/Y directions
 *         dx,dy Grid spacing in the X/Y directions
-*         alpha Helmholtz eqn. coefficient
 *         omega Relaxation factor
 *         f(n,m) Right hand side function
 *         u(n,m) Dependent variable/Solution
@@ -38,7 +37,7 @@ void JacobiData::run() {
 
   const double ax = 1.0 / (dx * dx);	 /* X-direction coef */
   const double ay = 1.0 / (dy * dy);	 /* Y_direction coef */
-  const double b = -2.0 * (ax + ay) - alpha; /* Central coeff */
+  const double b = -2.0 * (ax + ay); /* Central coeff */
   double residual = 10.0 * tolerance;
 
   while (effective_iter_count < max_iterations && residual > tolerance) {
@@ -89,7 +88,6 @@ JacobiData::JacobiData(){
 // default medium 
         n_cols      = 2000;
         n_rows      = 2000;
-        alpha     = 0.8;
         relax     = 1.0;
         tolerance = 1e-10;
         max_iterations   = 50;
@@ -99,8 +97,6 @@ JacobiData::JacobiData(){
         scanf("%d", &n_cols);
         printf("\nInput m - matrix size in y direction:               ");
         scanf("%d", &n_rows);
-        printf("\nInput alpha - Helmholtz constant:                   ");
-        scanf("%lf", &alpha);
         printf("\nInput relax - Successive over-relaxation parameter: ");
         scanf("%lf", &relax);
         printf("\nInput tol - error tolerance for iterrative solver:  ");
@@ -111,7 +107,6 @@ JacobiData::JacobiData(){
 #elif defined DATA_LARGE
         n_cols      = 7000;
         n_rows      = 7000;
-        alpha     = 0.8;
         relax     = 1.0;
         tolerance = 1e-12;
         max_iterations   = 2;
@@ -119,18 +114,16 @@ JacobiData::JacobiData(){
 #elif defined DATA_SMALL
         n_cols      = 200;
         n_rows      = 200;
-        alpha     = 0.8;
         relax     = 1.0;
         tolerance = 1e-7;
         max_iterations   = 1000;
 	out_iter = 50;
 #endif
         printf("\n-> matrix size: %dx%d"
-               "\n-> alpha: %f"
                "\n-> relax: %f"
                "\n-> tolerance: %f"
                "\n-> #of iterations: %d \n\n",
-               n_cols, n_rows, alpha, relax,
+               n_cols, n_rows, relax,
                tolerance, max_iterations);
 
 
@@ -168,9 +161,9 @@ void JacobiData::init_matrix(){
             yy2 = yy * yy;
 
             get_u(j,i) = 0.0;
-            get_f(j,i) = -alpha * (1.0 - xx2) * (1.0 - yy2)
-                     + 2.0 * (-2.0 + xx2 + yy2);
-        }
+	    //get_f(j,i) = - 2.0 * (1.0 - xx2) - 2.0 * (1.0 - yy2);
+            get_f(j,i) = - M_PI*M_PI * ( xx2 + yy2 ) * sin ( M_PI * xx * yy );
+	}
     }
     max_threads=omp_get_num_threads();	  	
 }

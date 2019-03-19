@@ -34,7 +34,6 @@ struct JacobiData
     int last_row;
     int max_iterations;
     int out_iter;
-    double alpha;
     double relax;
     double tolerance;
     
