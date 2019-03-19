@@ -1,0 +1,19 @@
+-> matrix size: 500x500
+-> relax: 1.000000
+-> tolerance: 1.000000e-10
+-> #of iterations: 1000000 
+
+total 66951881892
+ Number of iterations : 269965
+ Residual             : 9.999925e-11
+ Solution Error       : 0.000005045694
+ Elapsed Time         : 161.4789414
+ MFlop/s              : 5390.060094
+ Flop/LUP	      : 13
+ Byte/LUP	      : 32
+ b_s MB/s	      : 40000
+ P_max LUP/s (single) : 1250.000000
+ P_real LUP/s (/core) : 414.616800
+It takes 8 seconds to create all images...
+
+===============================================================
