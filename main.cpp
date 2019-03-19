@@ -49,8 +49,8 @@ void CheckError(JacobiData& data)
         {
             double xx   = -1.0 + data.dx * i;
             double yy   = -1.0 + data.dy * j;
-	    // double exact = (1.0 - xx * xx) * (1.0 - yy * yy);  
-	    double exact = sin ( M_PI * xx * yy );  
+	     double exact = (1.0 - xx * xx) * (1.0 - yy * yy);  
+	    //double exact = sin ( M_PI * xx * yy );  
 	    out_file << exact << "\t";
 	    double temp = data.get_u(j,i) - exact;
             error += temp * temp;

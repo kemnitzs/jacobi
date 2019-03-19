@@ -59,7 +59,7 @@ void JacobiData::run() {
 	  get_u(j, i) = uold(j, i) - relax * fLRes;
 
 	  // accumulate residual error 
-	  residual += fLRes * fLRes;
+	  residual += pow(fLRes,2);
 	}
       }
     } // omp parallel 
@@ -83,15 +83,14 @@ void JacobiData::run() {
   this->residual = residual;
 }
 
-#define READ_INPUT
 JacobiData::JacobiData(){
 // default medium 
-        n_cols      = 2000;
-        n_rows      = 2000;
+        n_cols      = 500;
+        n_rows      = 500;
         relax     = 1.0;
         tolerance = 1e-10;
-        max_iterations   = 50;
-	out_iter = 5;
+        max_iterations   = 1000000;
+	out_iter = (int) max_iterations/20;
 #ifdef READ_INPUT
         printf("Input n - matrix size in x direction:                 ");
         scanf("%d", &n_cols);
@@ -121,7 +120,7 @@ JacobiData::JacobiData(){
 #endif
         printf("\n-> matrix size: %dx%d"
                "\n-> relax: %f"
-               "\n-> tolerance: %f"
+               "\n-> tolerance: %e"
                "\n-> #of iterations: %d \n\n",
                n_cols, n_rows, relax,
                tolerance, max_iterations);
@@ -146,26 +145,28 @@ JacobiData::JacobiData(){
 }
 
 void JacobiData::init_matrix(){
-    int i, j, xx, yy, xx2, yy2;
     /* Initialize initial condition and RHS */
 
-#pragma omp parallel for 
+#pragma omp parallel for  
     for (int j = first_row; j <= last_row; j++)
     {
         for (int i = 0; i < n_cols; i++)
         {
-            xx = (int) (-1.0 + dx * i);
-            yy = (int) (-1.0 + dy * j);
+            double xx = -1.0 + dx * i;
+            double yy = -1.0 + dy * j;
 
-            xx2 = xx * xx;
-            yy2 = yy * yy;
+            double xx2 = xx * xx;
+            double yy2 = yy * yy;
 
             get_u(j,i) = 0.0;
-	    //get_f(j,i) = - 2.0 * (1.0 - xx2) - 2.0 * (1.0 - yy2);
-            get_f(j,i) = - M_PI*M_PI * ( xx2 + yy2 ) * sin ( M_PI * xx * yy );
+	//    get_f(j,i)= - (1.0 - xx2) * (1.0 - yy2) + 2.0 * (-2.0 + xx2 + yy2);
+	    get_f(j,i) = - 2.0 * (1.0 - xx2) - 2.0 * (1.0 - yy2);
+	//    get_f(j,i) = -M_PI*M_PI*(xx2+yy2)*sin(M_PI*xx*yy);
 	}
     }
     max_threads=omp_get_num_threads();	  	
+  
+    JacobiData::out(F,"charge.dat");
 }
 
 void JacobiData::out(std::vector<double> out_array,std::string filename){

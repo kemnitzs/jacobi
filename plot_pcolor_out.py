@@ -16,39 +16,34 @@ else:
 E_file=directory_in_str + 'exact.dat'
 E = np.loadtxt(E_file)
 
+C_file=directory_in_str + 'charge.dat'
+C = np.loadtxt(C_file)
+
 ny, nx = E.shape
 x = np.linspace(-1, 1, nx)
 y = np.linspace(-1, 1, ny)
 X, Y = np.meshgrid(x, y)
-
-if nx > 100:
-    XS=round(nx/100)
-else:
-    XS=1
-
-if ny > 100:
-    YS=round(ny/100)
-else:
-    YS=1
 
 pathlist = Path(directory_in_str).glob('out_*.dat')
 for path in pathlist:
 
     M = np.loadtxt(str(path))
     fig = plt.figure(figsize=plt.figaspect(0.5))
+    
+    
     # subplot 1 - calculated
     ax = fig.add_subplot(1, 2, 1)
-    #surf = ax.plot_surface(X,Y,M, rstride=YS, cstride=XS, cmap='viridis', linewidth=0, antialiased=False)
-    surf = ax.pcolor(M)
+    surf = ax.pcolormesh(M)
     
     fig.colorbar(surf)
     surf.set_clim(-1.0,1.0)
     ax.set_title("calculated solution") 
+    
+    
     # subplot 2 - exact solution
     
     ax2 = fig.add_subplot(1, 2, 2)
-    #surf2 = ax2.plot_surface(X,Y,E, rstride=YS, cstride=XS, cmap='viridis', linewidth=0, antialiased=False)
-    surf2 = ax2.pcolor(E)
+    surf2 = ax2.pcolormesh(E)
     
     fig.colorbar(surf2)
     surf2.set_clim(-1.0,1.0)
