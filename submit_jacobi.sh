@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=atlas
-#SBATCH --name=jacobi_example
-#SBATCH --time=00:10:00
+#SBATCH --partition=batch
+#SBATCH --job-name=jacobi_example
+#SBATCH --time=00:30:00
 #SBATCH --nodes=1           ### Number of Nodes
 #SBATCH --ntasks-per-node=1 ### Number of tasks (MPI processes)
-##SBATCH --cpus-per-task=1  ### Number of threads per task (OMP threads)
+#SBATCH --cpus-per-task=48  ### Number of threads per task (OMP threads)
 
 OUTPUT_IMAGES=0
 

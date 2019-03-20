@@ -104,19 +104,19 @@ JacobiData::JacobiData(){
         scanf("%d", &max_iterations);
 	out_iter= (int) max_iterations/20;
 #elif defined DATA_LARGE
-        n_cols      = 7000;
-        n_rows      = 7000;
+        n_cols      = 2000;
+        n_rows      = 2000;
         relax     = 1.0;
-        tolerance = 1e-12;
-        max_iterations   = 2;
-	out_iter = 1;
+        tolerance = 1e-10;
+        max_iterations   = 1000000;
+	out_iter = (int) max_iterations/20;
 #elif defined DATA_SMALL
         n_cols      = 200;
         n_rows      = 200;
         relax     = 1.0;
-        tolerance = 1e-7;
-        max_iterations   = 1000;
-	out_iter = 50;
+        tolerance = 1e-10;
+        max_iterations   = 100000;
+	out_iter = (int) max_iterations/20;
 #endif
         printf("\n-> matrix size: %dx%d"
                "\n-> relax: %f"
