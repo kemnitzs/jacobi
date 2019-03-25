@@ -4,8 +4,8 @@ PROJECT(cpp-jacobi)
 SET( CMAKE_BUILD_TYPE RELEASE )
 
 SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -fno-exceptions -fopenmp -Ofast" )
-SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic -D_GLIBCXX_DEBUG -fsanitize=address" )
-SET( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}" )
+SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -Wall -pedantic -D_GLIBCXX_DEBUG -fsanitize=address" )
+SET( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS}" )
 SET( CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 ADD_EXECUTABLE(bin_jacobi main.cpp jacobi.cpp)

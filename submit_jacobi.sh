@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=1 ### Number of tasks (MPI processes)
 #SBATCH --cpus-per-task=48  ### Number of threads per task (OMP threads)
 
-OUTPUT_IMAGES=0
+OUTPUT_IMAGES=1
 
 module purge
 module load slurm cmake/3.4.3 gcc/8.2.0 openmpi/2.1.1
@@ -25,6 +25,8 @@ BASE=$(pwd)
 cmake .
 make
 
+rm -r run_
+
 ### setup run ###
 RUNFOLDER=run_$SLURM_JOB_ID/
 mkdir -p $RUNFOLDER 
@@ -32,7 +34,7 @@ cd $RUNFOLDER
 
 cp $BASE/bin_jacobi .
 # run script
-srun ./bin_jacobi
+./bin_jacobi
 
 cd $BASE
 

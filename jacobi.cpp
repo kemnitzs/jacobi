@@ -85,10 +85,10 @@ void JacobiData::run() {
 
 JacobiData::JacobiData(){
 // default medium 
-        n_cols      = 500;
-        n_rows      = 500;
+        n_cols      = 1000;
+        n_rows      = 1000;
         relax     = 1.0;
-        tolerance = 1e-10;
+        tolerance = 1e-16;
         max_iterations   = 1000000;
 	out_iter = (int) max_iterations/20;
 #ifdef READ_INPUT
@@ -186,7 +186,7 @@ void JacobiData::out(std::vector<double> out_array,std::string filename){
 std::string JacobiData::iter2filename(std::string pre_iter, int iter, std::string post_iter){
 	  
 	std::stringstream ss;	
-      	ss << std::setw(6) << std::setfill('0') << iter;
+      	ss << std::setw(9) << std::setfill('0') << iter;
       	std::string step = ss.str();
 	std::string filename = pre_iter + step + post_iter;
 	
