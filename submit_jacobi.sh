@@ -25,8 +25,6 @@ BASE=$(pwd)
 cmake .
 make
 
-rm -r run_
-
 ### setup run ###
 RUNFOLDER=run_$SLURM_JOB_ID/
 mkdir -p $RUNFOLDER 
@@ -34,7 +32,7 @@ cd $RUNFOLDER
 
 cp $BASE/bin_jacobi .
 # run script
-./bin_jacobi
+srun ./bin_jacobi
 
 cd $BASE
 
